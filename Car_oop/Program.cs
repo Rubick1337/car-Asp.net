@@ -1,4 +1,5 @@
 using Car_oop.Contracts;
+using Car_oop.Interface;
 using Car_oop.Repository;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,7 @@ builder.Services.AddDbContextPool<RepositoryContext>(
     options =>options.UseMySql(connectionString,ServerVersion.AutoDetect(connectionString)));
 
 builder.Services.AddScoped<IClientsRepository,ClientRepository>();
+builder.Services.AddScoped<IPostRepository, PostRepository>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
