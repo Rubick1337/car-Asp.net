@@ -11,6 +11,8 @@ namespace Car_oop.Models
 
         public string name { get; set; }
         public string surname { get; set; }
+
+        public double payday { get; set; }
         //связь 1 к 1 Post --> Person
         public int PostId {  get; set; }
         public Post post { get; set; } = null!;
