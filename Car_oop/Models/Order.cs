@@ -16,8 +16,8 @@ namespace Car_oop.Models
 
         public Person person { get; set; } = null!;
         // связь 1 к 1..0 Car --> Order
-        public int? CarId { get; set; }
-        public Car? car { get; set; } = null!; 
+        public int CarId { get; set; }
+        public Car car { get; set; } = null!; 
         // связь 1 к м  Client --> Order
         public int ClientId { get; set; }
 
