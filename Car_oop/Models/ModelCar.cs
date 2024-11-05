@@ -12,7 +12,6 @@ namespace Car_oop.Models
         public string driveType { get; set; }
         public string firm { get; set; }
         public string fuelType { get; set; }
-        public int mileage { get; set; }
         public string model { get; set; }
         public double price { get; set; }
         public string transmissionType { get; set; }
