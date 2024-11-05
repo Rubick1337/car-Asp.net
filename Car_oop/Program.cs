@@ -11,6 +11,7 @@ builder.Services.AddDbContextPool<RepositoryContext>(
 
 builder.Services.AddScoped<IClientsRepository,ClientRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
+builder.Services.AddScoped<IModelCarRepository, ModelCarRepository>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
