@@ -16,7 +16,7 @@ namespace Car_oop.Repository
         public IEnumerable<PersonalDto> GetAllPersonal(bool trackChanges)
         {
             var persons = FindAll(trackChanges).OrderBy(x => x.Id).ToList();
-            //var perosonsDto = persons.Select(x => new PersonalDto(x.Id, string.Join(' ', x.name, x.surname), x.payday,x.experience,x.PostId)).ToList();
+            //var perosonsDto = persons.Select(x => new PersonalDto(x.Id, string.Join(' ', x.name, x.surname), x.payday, x.experience, x.PostId)).ToList();
             var perosonsDto = _mapper.Map<IEnumerable<PersonalDto>>(persons);
             return perosonsDto;
         }

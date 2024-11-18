@@ -1,6 +1,6 @@
 ﻿namespace Car_oop.DTO
 {
-    public record ModelDto(int Id, string name, int count,string desription,int year,double price)
+    public record ModelDto(int Id, string Name, int count, string Description, int yearRealse, double price)
     {
     }
 }
