@@ -1,4 +1,5 @@
-﻿using Car_oop.Contracts;
+﻿using AutoMapper;
+using Car_oop.Contracts;
 using Car_oop.DTO;
 using Car_oop.Models;
 using Microsoft.EntityFrameworkCore;
@@ -28,21 +29,26 @@ namespace Car_oop.Repository
 
     public class ClientRepository : RepositoryBase<Client>, IClientsRepository
     {
-        public ClientRepository(RepositoryContext context) : base(context)
+        private readonly IMapper _mapper;
+        public ClientRepository(RepositoryContext context,IMapper mapper) : base(context)
         {
+            _mapper = mapper;
         }
         public IEnumerable<ClientDto> GetAllClients(bool trackChanges)
         {
+            //Использование Imapper
             var clients = FindAll(trackChanges).OrderBy(x => x.Id).ToList();
-            var clientsDto = clients.Select(x => new ClientDto(x.Id, string.Join(' ', x.name, x.surname), x.clientPhone, x.passport)).ToList();
+            //var clientsDto = clients.Select(x => new ClientDto(x.Id, string.Join(' ', x.name, x.surname), x.clientPhone, x.passport)).ToList();
+            var clientsDto = _mapper.Map<IEnumerable <ClientDto>>(clients);
             return clientsDto;
         }
 
         public ClientDto GetClient(int id, bool trackChanges)
         {
             var clients = FindByCondition(g => g.Id.Equals(id), trackChanges).SingleOrDefault();
-
-            var clientsDto = new ClientDto(clients.Id, string.Join(' ', clients.name, clients.surname), clients.clientPhone, clients.passport);
+            //Использование Imapper
+            //var clientsDto = new ClientDto(clients.Id, string.Join(' ', clients.name, clients.surname), clients.clientPhone, clients.passport);
+            var clientsDto = _mapper.Map<ClientDto>(clients);  
             return clientsDto;
         }
     }

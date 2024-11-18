@@ -8,11 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("defaultConnection");
 builder.Services.AddDbContextPool<RepositoryContext>(
     options =>options.UseMySql(connectionString,ServerVersion.AutoDetect(connectionString)));
-
+//подключение репезитории
 builder.Services.AddScoped<IClientsRepository,ClientRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IModelCarRepository, ModelCarRepository>();
-
+//добавление Automapper  параметр typeof(Program) используется для указания сборки или пространства имён,
+//где AutoMapper должен искать профили маппинга
+builder.Services.AddAutoMapper(typeof(Program));
 //добавление swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -31,6 +33,8 @@ if(app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    //Выполнение Get запроса перенаправление на swagger
+    app.MapGet("/", () => Results.Redirect("/swagger"));
 }
 app.UseStaticFiles();
 

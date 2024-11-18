@@ -1,4 +1,5 @@
-﻿using Car_oop.Contracts;
+﻿using AutoMapper;
+using Car_oop.Contracts;
 using Car_oop.DTO;
 using Car_oop.Interface;
 using Car_oop.Models;
@@ -7,13 +8,16 @@ namespace Car_oop.Repository
 {
     public class CarRepository : RepositoryBase<Car>, ICarRepository
     {
-        public CarRepository(RepositoryContext context) : base(context)
+        private IMapper _mapper;
+        public CarRepository(RepositoryContext context,IMapper mapper) : base(context)
         {
+            _mapper = mapper;
         }
         public IEnumerable<CarDto> GetAllCars(bool trackChanges)
         {
             var cars = FindAll(trackChanges).OrderBy(x => x.Id).ToList();
-            var carsDto = cars.Select(x => new CarDto(x.Id, x.ModelCarId)).ToList();
+            //var carsDto = cars.Select(x => new CarDto(x.Id, x.ModelCarId)).ToList();
+            var carsDto = _mapper.Map<IEnumerable<CarDto>>(cars);
             return carsDto;
         }
 
@@ -21,7 +25,8 @@ namespace Car_oop.Repository
         {
             var cars = FindByCondition(g => g.Id.Equals(id), trackChanges).SingleOrDefault();
 
-            var carsDto = new CarDto(cars.Id, cars.ModelCarId);
+            //var carsDto = new CarDto(cars.Id, cars.ModelCarId);
+            var carsDto = _mapper.Map<CarDto>(cars);
             return carsDto;
         }
     }
