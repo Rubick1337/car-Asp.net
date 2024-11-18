@@ -17,6 +17,7 @@ namespace Car_oop.MappingProfile
             CreateMap<PaymentMethod, PaymentMethodDto>();
             CreateMap<Person, PersonalDto>()
                 .ForCtorParam("name", opt => opt.MapFrom(x => string.Join(' ', x.name, x.surname)));
+            CreateMap<PersonalForCreationDto, Person>();
             CreateMap<Post, PostDto>();
         }
     }

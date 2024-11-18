@@ -7,7 +7,7 @@ namespace Car_oop.Models
         [Key]
         public int Id { get; set; }
         public string namePost { get; set; }
-        //связь 1 к 1 Post --> Person
-        public Person person { get; set; } = null!;
+        //связь 1 к м Post --> Person
+        public ICollection<Person> person { get; } = new List<Person>();
     }
 }

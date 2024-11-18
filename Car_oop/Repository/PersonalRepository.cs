@@ -29,5 +29,12 @@ namespace Car_oop.Repository
             var perosonsDto = _mapper.Map<PersonalDto>(persons);
             return perosonsDto;
         }
+        public PersonalDto CreatePersonal(PersonalForCreationDto personal)
+        {
+            var personalEntity = _mapper.Map<Person>(personal);
+            Create(personalEntity);
+            var personReturn = _mapper.Map<PersonalDto>(personalEntity);
+            return personReturn;
+        }
     }
 }
