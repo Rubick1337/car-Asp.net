@@ -7,7 +7,7 @@ namespace Car_oop.Models
         public int Id { get; set; }
   
  
-        //связь ModelCar --> Сar 1 к 1
+        //связь ModelCar --> Сar 1 к м
         public int ModelCarId { get; set; }
         public ModelCar modelCar { get; set; } = null!;
 
