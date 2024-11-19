@@ -10,5 +10,6 @@ namespace Car_oop.Contracts
 
         //IEnumerable<Client> GetAllClients(bool trackChanges);
         //Client GetClient(int id,bool trackChanges);
+        ClientDto CreateClient(ClientForCreationcs personal);
     }
 }

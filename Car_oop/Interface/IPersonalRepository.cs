@@ -7,6 +7,6 @@ namespace Car_oop.Interface
         IEnumerable<PersonalDto> GetAllPersonal(bool trackChanges);
         PersonalDto GetPersonal(int id, bool trackChanges);
 
-        PersonalDto CreatePersonal(PersonalForCreationDto personal);
+        PersonalDto CreatePersonal(PersonalForCreationDto personal, int PostId,bool trackChanges);
     }
 }

@@ -3,6 +3,7 @@ using Car_oop.Contracts;
 using Car_oop.DTO;
 using Car_oop.Interface;
 using Car_oop.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Car_oop.Repository
 {
@@ -29,12 +30,17 @@ namespace Car_oop.Repository
             var perosonsDto = _mapper.Map<PersonalDto>(persons);
             return perosonsDto;
         }
-        public PersonalDto CreatePersonal(PersonalForCreationDto personal)
+        public PersonalDto CreatePersonal(PersonalForCreationDto personal, int PostId, bool trackChanges)
         {
+            var postCheck = _context.Set<Post>()
+                .Where(x => x.Id.Equals(PostId))
+                .AsNoTracking()
+                .SingleOrDefault();
             var personalEntity = _mapper.Map<Person>(personal);
+            personalEntity.PostId = PostId;
             Create(personalEntity);
-            var personReturn = _mapper.Map<PersonalDto>(personalEntity);
-            return personReturn;
+            var personalReturn = _mapper.Map<PersonalDto>(personalEntity);
+            return personalReturn;
         }
     }
 }

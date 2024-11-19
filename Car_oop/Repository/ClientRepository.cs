@@ -51,6 +51,13 @@ namespace Car_oop.Repository
             var clientsDto = _mapper.Map<ClientDto>(clients);  
             return clientsDto;
         }
+        public ClientDto CreateClient(ClientForCreationcs personal)
+        {
+            var clientEntity = _mapper.Map<Client>(personal);
+            Create(clientEntity);
+            var clientReturn = _mapper.Map<ClientDto>(clientEntity);
+            return clientReturn;
+        }
     }
 
 }

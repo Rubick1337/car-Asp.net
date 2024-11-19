@@ -15,13 +15,13 @@ namespace Car_oop.Controllers
             _postRepository = postRepository;
         }
         [HttpGet]
-        public IActionResult GetAllClients()
+        public IActionResult GetPosts()
         {
             var clients = _postRepository.GetAllPosts(trackChanges: false);
             return Ok(clients);
         }
         [HttpGet("{id:int}")]
-        public IActionResult GetClient(int id)
+        public IActionResult GetPost(int id)
         {
             var clients = _postRepository.GetPost(id, trackChanges: false);
             return Ok(clients);

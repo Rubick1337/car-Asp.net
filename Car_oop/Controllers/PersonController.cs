@@ -29,11 +29,11 @@ namespace Car_oop.Controllers
             return Ok(personal);
         }
         [HttpPost]
-        public IActionResult CreatePersonal([FromBody] PersonalForCreationDto personal)
+        public IActionResult CreatePersonal([FromBody] PersonalForCreationDto personal,int PostId)
         {
             if (personal == null)
                 return BadRequest("Personal is null");
-            var personCreate = _personalRepository.CreatePersonal(personal);
+            var personCreate = _personalRepository.CreatePersonal(personal,PostId,false);
             return Ok(personCreate);
         }
     }

@@ -10,6 +10,5 @@
 
         public double payday { get; set; }
 
-        public int PostId { get; set; }
     }
 }
