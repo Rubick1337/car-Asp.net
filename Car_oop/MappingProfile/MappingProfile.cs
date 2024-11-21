@@ -14,6 +14,7 @@ namespace Car_oop.MappingProfile
             CreateMap<ModelCar, ModelDto>()
                 .ForCtorParam("Name", opt => opt.MapFrom(x => string.Join(' ', x.model, x.color, x.firm, x.brand)))
                 .ForCtorParam("Description", opt => opt.MapFrom(x => string.Join(x.bodyType, x.driveType, x.fuelType, x.transmissionType)));
+            CreateMap<ModelCarCreationDto, ModelCar>();
             CreateMap<Order, OrderDto>();
             CreateMap<PaymentMethod, PaymentMethodDto>();
             CreateMap<PersonalForCreationDto, Person>();

@@ -2,8 +2,10 @@
 using Car_oop.Contracts;
 using Car_oop.DTO;
 using Car_oop.Models;
+using Car_oop.Models.Exception_custom;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -58,6 +60,38 @@ namespace Car_oop.Repository
             var clientReturn = _mapper.Map<ClientDto>(clientEntity);
             return clientReturn;
         }
+        public IEnumerable<ClientDto> GetByIds(IEnumerable<int> id,bool trackChanges) 
+            {
+            if(id == null)
+            {
+                throw new IdBadRequestException();
+            }
+            var ClientsEntity = FindByCondition(x => id.Contains(x.Id),trackChanges).ToList();
+
+            if (id.Count() != ClientsEntity.Count())
+            {
+                throw new IdMisMatchRequest();
+            }
+            var clientReturn = _mapper.Map<IEnumerable<ClientDto>>(ClientsEntity);
+            return clientReturn;
+            }
+        public (IEnumerable<ClientDto> clientDto, string ids) CreateClientCollection(
+            IEnumerable<ClientForCreationcs> personalCollection)
+        {
+            if(personalCollection == null)
+            {
+                throw new ClientCollectionBadRequestExcaption();
+            }
+            var clientEntities = _mapper.Map<IEnumerable<Client>>(personalCollection);
+            foreach(var client in clientEntities)
+            {
+                Create(client);
+            }
+            _context.SaveChanges();
+            var clientReturn = _mapper.Map<IEnumerable<ClientDto>>(clientEntities);
+            var ids = string.Join(",", clientReturn.Select(x => x.Id));
+            return (clientDto: clientReturn, ids: ids);
+        }   
     }
 
 }

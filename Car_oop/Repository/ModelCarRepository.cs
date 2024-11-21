@@ -29,5 +29,12 @@ namespace Car_oop.Repository
             //var modelsDto = _mapper.Map<ModelDto>(models);
             return modelsDto;
         }
+        public ModelDto CreateModelCar(ModelCarCreationDto modelCar)
+        {
+            var modelEntity = _mapper.Map<ModelCar>(modelCar);
+            Create(modelEntity);
+            var modelReturn = _mapper.Map<ModelDto>(modelEntity);
+            return modelReturn;
+        }
     }
 }

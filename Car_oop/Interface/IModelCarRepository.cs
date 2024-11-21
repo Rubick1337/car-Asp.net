@@ -6,5 +6,6 @@ namespace Car_oop.Interface
     {
         IEnumerable<ModelDto> GetAllModels(bool trackChanges);
         ModelDto GetModel(int id, bool trackChanges);
+        ModelDto CreateModelCar(ModelCarCreationDto model);
     }
 }

@@ -1,5 +1,6 @@
 using Car_oop.Contracts;
 using Car_oop.Interface;
+using Car_oop.Middleware;
 using Car_oop.Repository;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("defaultConnection");
 builder.Services.AddDbContextPool<RepositoryContext>(
     options =>options.UseMySql(connectionString,ServerVersion.AutoDetect(connectionString)));
+
 //подключение репезитории
 builder.Services.AddScoped<IClientsRepository,ClientRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
@@ -23,7 +25,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
-
+//Подключение Middlaware для исключений
+app.UseMiddleware<ExceptionMiddleware>();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

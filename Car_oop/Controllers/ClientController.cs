@@ -20,10 +20,10 @@ namespace Car_oop.Controllers
             var clients = _clientsRepository.GetAllClients(trackChanges: false);
             return Ok(clients);
         }
-        [HttpGet("{id:int}",Name = "GetClient")]   
+        [HttpGet("{id:int}", Name = "GetClient")]
         public IActionResult GetClient(int id)
         {
-            var clients = _clientsRepository.GetClient(id,trackChanges: false);
+            var clients = _clientsRepository.GetClient(id, trackChanges: false);
             return Ok(clients);
         }
         [HttpPost]
@@ -33,6 +33,19 @@ namespace Car_oop.Controllers
                 return BadRequest("Personal is null");
             var clientCreate = _clientsRepository.CreateClient(client);
             return Ok(clientCreate);
+        }
+        [HttpGet("collection/({ids})", Name = "GetCollectionCleint")]
+        public IActionResult GetCollectionCleint(string ids)
+        {
+            var idList = ids.Split(',').Select(int.Parse).ToList();
+            var clients = _clientsRepository.GetByIds(idList, trackChanges: false);
+            return Ok(clients);
+        }
+        [HttpPost("collection")]
+        public IActionResult CreateCollectionClients([FromBody] IEnumerable<ClientForCreationcs> clientCollection)
+        {
+            var result = _clientsRepository.CreateClientCollection(clientCollection);
+            return CreatedAtRoute("GetCollectionCleint", new { result.ids }, result.clientDto);
         }
     }
 
