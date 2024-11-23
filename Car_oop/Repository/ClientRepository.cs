@@ -106,6 +106,20 @@ namespace Car_oop.Repository
             Delete(clientCheck);
             _context.SaveChanges();
         }
+        public void UpdateClient(int id, bool trackChanges, ClientForUpdateDto updateClient)
+        {
+            var clientEntity = FindByCondition(cl => cl.Id.Equals(id), trackChanges)
+                .SingleOrDefault();
+
+            if (clientEntity == null)
+            {
+                throw new NotFound();
+            }
+
+            _mapper.Map(updateClient, clientEntity);
+
+            _context.SaveChanges();
+        }
     }
 
 }

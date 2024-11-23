@@ -1,4 +1,5 @@
 ﻿using Car_oop.Contracts;
+using Car_oop.DTO;
 using Car_oop.Interface;
 using Car_oop.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +32,16 @@ namespace Car_oop.Controllers
         public NoContentResult DeletePost(int id)
         {
             _postRepository.DeletePost(id, trackChanges: false);
+            return NoContent();
+        }
+        [HttpPut("{id:int}")]
+        public NoContentResult UpdatePost(int id,[FromBody]PostForUpdateDto post)
+        {
+            if(post == null)
+            {
+                BadRequest("Post is null");
+            }
+            _postRepository.UpdatePost(id, post, trackChanges: true);
             return NoContent();
         }
     }

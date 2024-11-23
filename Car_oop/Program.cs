@@ -15,6 +15,7 @@ builder.Services.AddScoped<IClientsRepository,ClientRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IModelCarRepository, ModelCarRepository>();
 builder.Services.AddScoped<IPersonalRepository, PersonalRepository>();
+builder.Services.AddScoped<ICarRepository,CarRepository>();
 //добавление Automapper  параметр typeof(Program) используется для указания сборки или пространства имён,
 //где AutoMapper должен искать профили маппинга
 builder.Services.AddAutoMapper(typeof(Program));

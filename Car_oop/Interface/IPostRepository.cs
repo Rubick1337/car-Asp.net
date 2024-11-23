@@ -7,5 +7,6 @@ namespace Car_oop.Interface
         IEnumerable<PostDto> GetAllPosts(bool trackChanges);
         PostDto GetPost(int id, bool trackChanges);
         void DeletePost(int id,bool trackChanges);
+        void UpdatePost(int id,PostForUpdateDto post,bool trackChanges);
     }
 }

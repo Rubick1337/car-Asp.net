@@ -41,6 +41,17 @@ namespace Car_oop.Controllers
             _personalRepository.DeletePersonal(id, trackChanges: false);
             return NoContent();
         }
+        [HttpPut("{id:int}")]
+        public IActionResult UpdatePersonal(int id, [FromBody] PersonalForUpdateDto personal)
+        {
+            if(personal == null)
+            {
+                return BadRequest("person is null");
+            }
+            _personalRepository.UpdatePersonal(id, personal,trackChanges:true);
+            return NoContent();
+
+        }
 
     }
 }

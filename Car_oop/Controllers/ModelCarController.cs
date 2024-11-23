@@ -41,5 +41,16 @@ namespace Car_oop.Controllers
             _modelCarRepository.DeleteModelCar(id, trackChanges: false);
             return NoContent();
         }
+        [HttpPut("{id:int}")]
+        public IActionResult UpdateModelCar(int id, [FromBody] ModelCarForUpdateDto modelCar)
+        {
+            if (modelCar == null)
+            {
+                return BadRequest("modelCar is null");
+            }
+            _modelCarRepository.UpdateModelCar(id, modelCar, trackChanges: true);
+            return NoContent();
+
+        }
     }
 }

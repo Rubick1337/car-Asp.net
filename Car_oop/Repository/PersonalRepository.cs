@@ -57,5 +57,15 @@ namespace Car_oop.Repository
             Delete(personalCheck);
             _context.SaveChanges();
         }
+        public void UpdatePersonal(int Id, PersonalForUpdateDto personal, bool trackChanges)
+        {
+            var personalCheck = FindByCondition(x => x.Id.Equals(Id), trackChanges).SingleOrDefault();
+            if (personalCheck == null)
+            {
+                throw new NotFound();
+            }
+            _mapper.Map(personal,personalCheck);
+            _context.SaveChanges();
+        }
     }
 }

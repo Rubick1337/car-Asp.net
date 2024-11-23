@@ -8,5 +8,6 @@ namespace Car_oop.Interface
         ModelDto GetModel(int id, bool trackChanges);
         ModelDto CreateModelCar(ModelCarCreationDto model);
         void DeleteModelCar(int id,bool trackChanges);
+        void UpdateModelCar(int id, ModelCarForUpdateDto modelCar, bool trackChanges);
     }
 }

@@ -46,5 +46,13 @@ namespace Car_oop.Repository
             Delete(postCheck);
             _context.SaveChanges();
         }
+        public void UpdatePost(int id, PostForUpdateDto post, bool trackChanges)
+        {
+            var postCheck = FindByCondition(pt => pt.Id.Equals(id), trackChanges);
+            if (postCheck is null)
+            { throw new NotFound(); }
+            _mapper.Map(post, postCheck);
+            _context.SaveChanges();
+        }
     }
 }

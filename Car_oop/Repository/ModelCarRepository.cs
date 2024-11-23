@@ -49,5 +49,16 @@ namespace Car_oop.Repository
             }
 
         }
+        public void UpdateModelCar(int id,ModelCarForUpdateDto modelCar, bool trackChanges)
+        {
+            var modelCarFind = FindByCondition(x => x.Id.Equals(id), trackChanges).SingleOrDefault();
+            if(modelCarFind is null)
+            {
+            throw new NotFound(); 
+            }
+            _mapper.Map(modelCar, modelCarFind);
+            _context.SaveChanges();
+
+        }
     }
 }

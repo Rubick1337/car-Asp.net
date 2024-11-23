@@ -53,6 +53,14 @@ namespace Car_oop.Controllers
             _clientsRepository.DeleteClient(id, trackChanges: false);
             return NoContent();
         }
+        [HttpPut("{id:int}")]
+        public IActionResult UpdateClient(int id, [FromBody] ClientForUpdateDto client)
+        {
+            if (client == null) 
+                return BadRequest("Client is null");
+            _clientsRepository.UpdateClient(id,trackChanges: true, client);
+            return NoContent();
+        }
     }
 
 }
