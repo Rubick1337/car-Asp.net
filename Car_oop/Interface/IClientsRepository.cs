@@ -14,5 +14,6 @@ namespace Car_oop.Contracts
         IEnumerable<ClientDto> GetByIds(IEnumerable<int> ids, bool trackChanges);
         (IEnumerable<ClientDto> clientDto, string ids) CreateClientCollection(
             IEnumerable<ClientForCreationcs> personal);
+        void DeleteClient(int Id, bool trackChanges);
     }
 }

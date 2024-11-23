@@ -47,6 +47,12 @@ namespace Car_oop.Controllers
             var result = _clientsRepository.CreateClientCollection(clientCollection);
             return CreatedAtRoute("GetCollectionCleint", new { result.ids }, result.clientDto);
         }
+        [HttpDelete("{id:int}")]
+        public NoContentResult DeleteClient(int id)
+        {
+            _clientsRepository.DeleteClient(id, trackChanges: false);
+            return NoContent();
+        }
     }
 
 }

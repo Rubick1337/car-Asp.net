@@ -1,5 +1,6 @@
 ﻿using Car_oop.Contracts;
 using Car_oop.Interface;
+using Car_oop.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Car_oop.Controllers
@@ -25,6 +26,12 @@ namespace Car_oop.Controllers
         {
             var clients = _postRepository.GetPost(id, trackChanges: false);
             return Ok(clients);
+        }
+        [HttpDelete("{id:int}")]
+        public NoContentResult DeletePost(int id)
+        {
+            _postRepository.DeletePost(id, trackChanges: false);
+            return NoContent();
         }
     }
 }

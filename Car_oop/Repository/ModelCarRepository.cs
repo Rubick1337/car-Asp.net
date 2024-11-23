@@ -2,8 +2,9 @@
 using Car_oop.DTO;
 using Car_oop.Interface;
 using Car_oop.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
-
+using Car_oop.Models.Exception_custom;
 namespace Car_oop.Repository
 {
     public class ModelCarRepository : RepositoryBase<ModelCar>, IModelCarRepository
@@ -35,6 +36,18 @@ namespace Car_oop.Repository
             Create(modelEntity);
             var modelReturn = _mapper.Map<ModelDto>(modelEntity);
             return modelReturn;
+        }
+        public void DeleteModelCar(int id, bool trackChanges)
+        {
+            var modelCarCheck = _context.Set<ModelCar>()
+                .Where(x => x.Id.Equals(id))
+                .AsNoTracking()
+                .SingleOrDefault();
+            if (modelCarCheck is null)
+            {
+                throw new NotFound();
+            }
+
         }
     }
 }

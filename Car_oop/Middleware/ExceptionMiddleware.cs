@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Car_oop.Models.Exception_custom;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Car_oop.Models.Exception_custom;
 
 namespace Car_oop.Middleware
 {
@@ -19,48 +19,33 @@ namespace Car_oop.Middleware
         {
             try
             {
-                // Передаем запрос дальше по конвейеру
                 await _next(context);
             }
             catch (Exception ex)
             {
-                // Логика обработки исключений
                 await HandleExceptionAsync(context, ex);
             }
         }
 
         private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            // Проверяем наличие контекста исключения
-            var contextFeature = new { Error = exception };
-
-            if (contextFeature != null)
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = exception switch
             {
-                // Устанавливаем статус код на основе типа исключения
-                context.Response.StatusCode = contextFeature.Error switch
-                {
-                    NotFound => StatusCodes.Status404NotFound,
-                    BadRequestException => StatusCodes.Status400BadRequest,
+                NotFound => StatusCodes.Status404NotFound,
+                BadRequestException => StatusCodes.Status400BadRequest,
+                _ => StatusCodes.Status500InternalServerError
+            };
 
-                    _ => StatusCodes.Status500InternalServerError
-                };
+            var errorDetails = new ErrorDetails
+            {
+                StatusCode = context.Response.StatusCode,
+                Message = exception.Message
+            };
 
-                // Устанавливаем Content-Type для ответа
-                context.Response.ContentType = "application/json";
-
-                // Создаем объект ошибки
-                var errorDetails = new ErrorDetails
-                {
-                    StatusCode = context.Response.StatusCode,
-                    Message = contextFeature.Error.Message
-                };
-
-                // Пишем объект ошибки в ответ в формате JSON
-                await context.Response.WriteAsync(JsonConvert.SerializeObject(errorDetails));
-            }
+            await context.Response.WriteAsync(JsonConvert.SerializeObject(errorDetails));
         }
 
-        // Класс для представления деталей ошибки
         public class ErrorDetails
         {
             public int StatusCode { get; set; }

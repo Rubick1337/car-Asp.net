@@ -1,5 +1,6 @@
 ﻿using Car_oop.DTO;
 using Car_oop.Interface;
+using Car_oop.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Car_oop.Controllers
@@ -33,6 +34,12 @@ namespace Car_oop.Controllers
                 return BadRequest("Model is null");
             var modelReturn = _modelCarRepository.CreateModelCar(model);
             return Ok(modelReturn);
+        }
+        [HttpDelete("{id:int}")]
+        public NoContentResult DeleteModelCar(int id)
+        {
+            _modelCarRepository.DeleteModelCar(id, trackChanges: false);
+            return NoContent();
         }
     }
 }

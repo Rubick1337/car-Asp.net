@@ -8,5 +8,6 @@ namespace Car_oop.Interface
         PersonalDto GetPersonal(int id, bool trackChanges);
 
         PersonalDto CreatePersonal(PersonalForCreationDto personal, int PostId,bool trackChanges);
+        void DeletePersonal(int Id,bool trackChanges);
     }
 }

@@ -3,6 +3,8 @@ using Car_oop.Contracts;
 using Car_oop.DTO;
 using Car_oop.Interface;
 using Car_oop.Models;
+using Car_oop.Models.Exception_custom;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 
 namespace Car_oop.Repository
@@ -30,6 +32,19 @@ namespace Car_oop.Repository
             //var postDto = new PostDto(post.Id, post.namePost);
             var postDto = _mapper.Map<PostDto>(post);
             return postDto;
+        }
+        public void DeletePost(int id, bool trackChanges)
+        {
+            var postCheck = _context.Set<Post>()
+                .Where(x => x.Id.Equals(id))
+                .AsNoTracking()
+                .SingleOrDefault();
+            if (postCheck is null)
+            {
+                throw new NotFound();
+            }
+            Delete(postCheck);
+            _context.SaveChanges();
         }
     }
 }

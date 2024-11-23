@@ -3,6 +3,7 @@ using Car_oop.Contracts;
 using Car_oop.DTO;
 using Car_oop.Interface;
 using Car_oop.Models;
+using Car_oop.Models.Exception_custom;
 using Microsoft.EntityFrameworkCore;
 
 namespace Car_oop.Repository
@@ -41,6 +42,20 @@ namespace Car_oop.Repository
             Create(personalEntity);
             var personalReturn = _mapper.Map<PersonalDto>(personalEntity);
             return personalReturn;
+        }
+        public void DeletePersonal (int Id, bool trackChanges)
+        {
+            var personalCheck = _context.Set<Person>()
+                .Where(x => x.Id.Equals(Id))
+                .AsNoTracking()
+                .FirstOrDefault();
+            if (personalCheck == null)
+            {
+                throw new NotFound();
+            }
+
+            Delete(personalCheck);
+            _context.SaveChanges();
         }
     }
 }

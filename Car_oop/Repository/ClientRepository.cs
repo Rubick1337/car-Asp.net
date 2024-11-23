@@ -91,7 +91,21 @@ namespace Car_oop.Repository
             var clientReturn = _mapper.Map<IEnumerable<ClientDto>>(clientEntities);
             var ids = string.Join(",", clientReturn.Select(x => x.Id));
             return (clientDto: clientReturn, ids: ids);
-        }   
+        }
+        public void DeleteClient(int Id, bool trackChanges)
+        {
+            var clientCheck = _context.Set<Client>()
+                .Where(x => x.Id.Equals(Id))
+                .AsNoTracking()
+                .FirstOrDefault();
+            if (clientCheck == null)
+            {
+                throw new NotFound();
+            }
+
+            Delete(clientCheck);
+            _context.SaveChanges();
+        }
     }
 
 }

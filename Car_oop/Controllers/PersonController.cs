@@ -36,5 +36,11 @@ namespace Car_oop.Controllers
             var personCreate = _personalRepository.CreatePersonal(personal,PostId,false);
             return Ok(personCreate);
         }
+        [HttpDelete("{id:int}")]
+        public NoContentResult DeletePerson(int id) { 
+            _personalRepository.DeletePersonal(id, trackChanges: false);
+            return NoContent();
+        }
+
     }
 }
