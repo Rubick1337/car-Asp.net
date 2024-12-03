@@ -1,11 +1,11 @@
 ﻿using Car_oop.Models.Exception_custom;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 
 namespace Car_oop.Middleware
 {
+    // Убираем static
     public class ExceptionMiddleware
     {
         private readonly RequestDelegate _next;
@@ -30,10 +30,12 @@ namespace Car_oop.Middleware
         private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             context.Response.ContentType = "application/json";
+
+            // Определение кода состояния в зависимости от типа исключения
             context.Response.StatusCode = exception switch
             {
-                NotFound => StatusCodes.Status404NotFound,
-                BadRequestException => StatusCodes.Status400BadRequest,
+                NotFound _ => StatusCodes.Status404NotFound,
+                BadRequestException _ => StatusCodes.Status400BadRequest,
                 _ => StatusCodes.Status500InternalServerError
             };
 
@@ -43,7 +45,8 @@ namespace Car_oop.Middleware
                 Message = exception.Message
             };
 
-            await context.Response.WriteAsync(JsonConvert.SerializeObject(errorDetails));
+            // Отправка ошибки в формате строки JSON
+            await context.Response.WriteAsync($"{{\"StatusCode\": {errorDetails.StatusCode}, \"Message\": \"{errorDetails.Message}\"}}");
         }
 
         public class ErrorDetails
