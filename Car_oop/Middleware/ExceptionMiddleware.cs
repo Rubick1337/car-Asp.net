@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 
 namespace Car_oop.Middleware
 {
-    // Убираем static
     public class ExceptionMiddleware
     {
         private readonly RequestDelegate _next;
@@ -31,7 +30,6 @@ namespace Car_oop.Middleware
         {
             context.Response.ContentType = "application/json";
 
-            // Определение кода состояния в зависимости от типа исключения
             context.Response.StatusCode = exception switch
             {
                 NotFound _ => StatusCodes.Status404NotFound,
@@ -45,7 +43,6 @@ namespace Car_oop.Middleware
                 Message = exception.Message
             };
 
-            // Отправка ошибки в формате строки JSON
             await context.Response.WriteAsync($"{{\"StatusCode\": {errorDetails.StatusCode}, \"Message\": \"{errorDetails.Message}\"}}");
         }
 
