@@ -3,7 +3,7 @@ using Car_oop.Contracts;
 using Car_oop.DTO;
 using Car_oop.Interface;
 using Car_oop.Models;
-
+using Car_oop.Models.Exception_custom;
 namespace Car_oop.Repository
 {
 
@@ -25,7 +25,10 @@ namespace Car_oop.Repository
         public OrderDto GetOrder(int id, bool trackChanges)
         {
             var orders = FindByCondition(g => g.Id.Equals(id), trackChanges).SingleOrDefault();
-
+            if(orders == null)
+            {
+                throw new NotFound();
+            }
             //var ordersDto = new OrderDto(orders.Id, orders.CarId, orders.ClientId, orders.PaymentMetgodId, orders.PersonId, orders.price, orders.status, orders.orderDate);
             var ordersDto = _mapper.Map<OrderDto>(orders);
             return ordersDto;

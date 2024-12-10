@@ -25,7 +25,10 @@ namespace Car_oop.Repository
         public ModelDto GetModel(int id, bool trackChanges)
         {
             var models = FindByCondition(g => g.Id.Equals(id), trackChanges).SingleOrDefault();
-
+            if (models == null)
+            {
+                throw new NotFound();
+            }
             var modelsDto = new ModelDto(models.Id, string.Join(' ', models.model, models.color, models.firm, models.brand), models.yearRealse, string.Join(' ', models.bodyType, models.driveType, models.fuelType, models.transmissionType), models.count, models.price);
             //var modelsDto = _mapper.Map<ModelDto>(models);
             return modelsDto;

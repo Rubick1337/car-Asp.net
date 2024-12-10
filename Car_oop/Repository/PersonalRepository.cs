@@ -26,7 +26,10 @@ namespace Car_oop.Repository
         public PersonalDto GetPersonal(int id, bool trackChanges)
         {
             var persons = FindByCondition(g => g.Id.Equals(id), trackChanges).SingleOrDefault();
-
+            if(persons == null)
+            {
+                throw new NotFound();
+            }
             //var perosonsDto = new PersonalDto(persons.Id, string.Join(' ', persons.name, persons.surname), persons.payday, persons.experience, persons.PostId);
             var perosonsDto = _mapper.Map<PersonalDto>(persons);
             return perosonsDto;

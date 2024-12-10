@@ -50,6 +50,10 @@ namespace Car_oop.Repository
             var clients = FindByCondition(g => g.Id.Equals(id), trackChanges).SingleOrDefault();
             //Использование Imapper
             //var clientsDto = new ClientDto(clients.Id, string.Join(' ', clients.name, clients.surname), clients.clientPhone, clients.passport);
+            if (clients == null)
+            {
+                throw new NotFound();
+            }
             var clientsDto = _mapper.Map<ClientDto>(clients);  
             return clientsDto;
         }

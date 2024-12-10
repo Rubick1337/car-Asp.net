@@ -28,7 +28,10 @@ namespace Car_oop.Repository
         public PostDto GetPost(int id, bool trackChanges)
         {
             var post = FindByCondition(g => g.Id.Equals(id), trackChanges).SingleOrDefault();
-
+            if (post == null)
+            {
+                throw new NotFound();
+            }
             //var postDto = new PostDto(post.Id, post.namePost);
             var postDto = _mapper.Map<PostDto>(post);
             return postDto;

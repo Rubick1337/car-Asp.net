@@ -3,7 +3,7 @@ using Car_oop.Contracts;
 using Car_oop.DTO;
 using Car_oop.Interface;
 using Car_oop.Models;
-
+using Car_oop.Models.Exception_custom;
 namespace Car_oop.Repository
 {
     public class PaymentMethodRepository : RepositoryBase<PaymentMethod>, IPaymentMethodRepository
@@ -24,7 +24,10 @@ namespace Car_oop.Repository
         public PaymentMethodDto GetPayment(int id, bool trackChanges)
         {
             var payments = FindByCondition(g => g.Id.Equals(id), trackChanges).SingleOrDefault();
-
+            if(payments == null)
+            {
+                throw new NotFound();
+            }
             //var paymentsDto = new PaymentMethodDto(payments.Id, payments.paymentMethod);
             var paymentsDto = _mapper.Map<PaymentMethodDto>(payments);
             return paymentsDto;
