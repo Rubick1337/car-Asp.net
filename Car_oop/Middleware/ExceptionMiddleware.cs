@@ -1,6 +1,7 @@
 ﻿using Car_oop.Models.Exception_custom;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace Car_oop.Middleware
@@ -34,6 +35,7 @@ namespace Car_oop.Middleware
             {
                 NotFound _ => StatusCodes.Status404NotFound,
                 BadRequestException _ => StatusCodes.Status400BadRequest,
+                ValidationException => StatusCodes.Status422UnprocessableEntity,
                 _ => StatusCodes.Status500InternalServerError
             };
 

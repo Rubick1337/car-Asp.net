@@ -1,6 +1,6 @@
 ﻿namespace Car_oop.DTO
 {
-    public record OrderDto (int id, int CarId, int ClientId, int MethodId, int PersonalId,double price, string status, DateTime orderTime)
+    public record OrderDto (int Id, int CarId, int ClientId, int PaymentMetgodId, int PersonId, double price, string status, DateTime orderDate)
     {
 
     }

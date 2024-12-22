@@ -4,17 +4,17 @@ namespace Car_oop.DTO
 {
     public class ModelCarForUpdateDto
     {
-        public string bodyType { get; init; }
-        public string brand { get; init; }
-        public string color { get; init; }
-        public int count { get; init; }
-        public string driveType { get; init; }
-        public string firm { get; init; }
-        public string fuelType { get; init; }
-        public string model { get; init; }
-        public double price { get; init; }
-        public string transmissionType { get; init; }
-        public int yearRealse { get; init; }
+        public string? bodyType { get; set; }
+        public string? brand { get; set; }
+        public string? color { get; set; }
+        public int? count { get; set; } 
+        public string? driveType { get; set; }
+        public string?  firm { get; set; }
+        public string? fuelType { get; set; }
+        public string? model { get; set; }
+        public double? price { get; set; }
+        public string? transmissionType { get; set; }
+        public int? yearRealse { get; set; } 
 
         //связь ModelCar --> Сar 1 к М
         public IEnumerable<CarCreationWithIdDto> cars {  get; init; }

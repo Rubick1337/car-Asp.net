@@ -1,7 +1,9 @@
 ﻿using Car_oop.Contracts;
 using Car_oop.DTO;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-
+using System.ComponentModel.DataAnnotations;
+using Car_oop.Models.Exception_custom;
 namespace Car_oop.Controllers
 {
     [ApiController]
@@ -9,10 +11,16 @@ namespace Car_oop.Controllers
     public class ClientController : ControllerBase
     {
         private readonly IClientsRepository _clientsRepository;
+        private readonly IValidator<ClientForCreationcs> _postClientValidator;
+        private readonly IValidator<ClientForUpdateDto> _putClientValidator;
 
-        public ClientController(IClientsRepository clientsRepository)
+        public ClientController(IClientsRepository clientsRepository, IValidator<ClientForCreationcs> postClientValditaor
+            , IValidator<ClientForUpdateDto> putClientValidator)
+
         {
             _clientsRepository = clientsRepository;
+            _postClientValidator = postClientValditaor;
+            _putClientValidator = putClientValidator;
         }
         [HttpGet]
         public IActionResult GetAllClients()
@@ -31,6 +39,15 @@ namespace Car_oop.Controllers
         {
             if (client == null)
                 return BadRequest("Personal is null");
+
+            FluentValidation.Results.ValidationResult result = _postClientValidator.Validate(client);
+            if (!result.IsValid)
+            {
+                result.AddToModelState(this.ModelState);
+
+                return UnprocessableEntity(ModelState);
+
+            }
             var clientCreate = _clientsRepository.CreateClient(client);
             return Ok(clientCreate);
         }
@@ -58,6 +75,15 @@ namespace Car_oop.Controllers
         {
             if (client == null) 
                 return BadRequest("Client is null");
+
+            FluentValidation.Results.ValidationResult result = _putClientValidator.Validate(client);
+            if (!result.IsValid)
+            {
+                result.AddToModelState(this.ModelState);
+
+                return UnprocessableEntity(ModelState);
+
+            }
             _clientsRepository.UpdateClient(id,trackChanges: true, client);
             return NoContent();
         }

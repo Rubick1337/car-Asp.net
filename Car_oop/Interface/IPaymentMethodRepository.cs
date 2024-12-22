@@ -6,5 +6,9 @@ namespace Car_oop.Interface
     {
         IEnumerable<PaymentMethodDto> GetAllPayments(bool trackChanges);
         PaymentMethodDto GetPayment(int id, bool trackChanges);
+
+        PaymentMethodDto CreateMethod(PaymentMethodForCreationDto method);
+        void DeleteMethod(int Id, bool trackChanges);
+        void UpdateMethod(int id, bool trackChanges, PaymentForUpdateDto updateMethod);
     }
 }

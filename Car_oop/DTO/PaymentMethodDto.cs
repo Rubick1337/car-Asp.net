@@ -1,6 +1,6 @@
 ﻿namespace Car_oop.DTO
 {
-    public record PaymentMethodDto (int id,string name)
+    public record PaymentMethodDto (int id,string paymentMethod)
     {
     }
 }

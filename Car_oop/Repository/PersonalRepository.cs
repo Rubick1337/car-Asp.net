@@ -60,9 +60,17 @@ namespace Car_oop.Repository
             Delete(personalCheck);
             _context.SaveChanges();
         }
-        public void UpdatePersonal(int Id, PersonalForUpdateDto personal, bool trackChanges)
+        public void UpdatePersonal(int Id, PersonalForUpdateDto personal,int? PostId, bool trackChanges)
         {
             var personalCheck = FindByCondition(x => x.Id.Equals(Id), trackChanges).SingleOrDefault();
+            var postCheck = _context.Set<Post>()
+                .Where(x => x.Id.Equals(PostId))
+                .AsNoTracking()
+                .FirstOrDefault();
+            if (postCheck == null)
+            {
+                throw new NotFound();
+            }
             if (personalCheck == null)
             {
                 throw new NotFound();

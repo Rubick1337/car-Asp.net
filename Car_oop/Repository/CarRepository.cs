@@ -4,6 +4,7 @@ using Car_oop.DTO;
 using Car_oop.Interface;
 using Car_oop.Models;
 using Car_oop.Models.Exception_custom;
+using Microsoft.EntityFrameworkCore;
 
 namespace Car_oop.Repository
 {
@@ -33,5 +34,47 @@ namespace Car_oop.Repository
             var carsDto = _mapper.Map<CarDto>(cars);
             return carsDto;
         }
+        public CarDto CreateCar(int carModelId, bool trackChanges)
+        {
+            var carEntity = new Car
+            {
+                ModelCarId = carModelId
+            };
+
+            Create(carEntity);
+
+            var carDto = _mapper.Map<CarDto>(carEntity);
+            return carDto;
+        }
+        public void DeleteCar(int Id, bool trackChanges)
+        {
+            var carCheck = _context.Set<Car>()
+                .Where(x => x.Id.Equals(Id))
+                .AsNoTracking()
+                .FirstOrDefault();
+            if (carCheck == null)
+            {
+                throw new NotFound();
+            }
+
+            Delete(carCheck);
+            _context.SaveChanges();
+        }
+        public void UpdateCar(int id, bool trackChanges, int CarModelId)
+        {
+            var clientEntity = FindByCondition(cl => cl.Id.Equals(id), trackChanges)
+                .SingleOrDefault();
+
+            if (clientEntity == null)
+            {
+                throw new NotFound();
+            }
+
+            clientEntity.ModelCarId = CarModelId;
+
+            _context.SaveChanges();
+        }
+
+
     }
 }

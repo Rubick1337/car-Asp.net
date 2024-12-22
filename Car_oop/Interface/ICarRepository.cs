@@ -6,5 +6,8 @@ namespace Car_oop.Interface
     {
         IEnumerable<CarDto> GetAllCars(bool trackChanges);
         CarDto GetCar(int id, bool trackChanges);
+        CarDto CreateCar(int CarModelId, bool trackChanges);
+        void DeleteCar(int Id, bool trackChanges);
+        void UpdateCar(int id, bool trackChanges, int CarModelId);
     }
 }

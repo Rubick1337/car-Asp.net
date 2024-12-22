@@ -49,6 +49,13 @@ namespace Car_oop.Repository
             Delete(postCheck);
             _context.SaveChanges();
         }
+        public PostDto CreatePost(PostForCreationDto post)
+        {
+            var clientEntity = _mapper.Map<Post>(post);
+            Create(clientEntity);
+            var clientReturn = _mapper.Map<PostDto>(clientEntity);
+            return clientReturn;
+        }
         public void UpdatePost(int id, PostForUpdateDto post, bool trackChanges)
         {
             var postCheck = FindByCondition(pt => pt.Id.Equals(id), trackChanges);

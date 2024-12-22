@@ -2,6 +2,7 @@ using Car_oop.Contracts;
 using Car_oop.Interface;
 using Car_oop.Middleware;
 using Car_oop.Repository;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,8 @@ builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IModelCarRepository, ModelCarRepository>();
 builder.Services.AddScoped<IPersonalRepository, PersonalRepository>();
 builder.Services.AddScoped<ICarRepository,CarRepository>();
+builder.Services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 //добавление Automapper  параметр typeof(Program) используется для указания сборки или пространства имён,
 //где AutoMapper должен искать профили маппинга
 builder.Services.AddAutoMapper(typeof(Program));
@@ -24,6 +27,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+// подключение валидатора 
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
 var app = builder.Build();
 //Подключение Middlaware для исключений

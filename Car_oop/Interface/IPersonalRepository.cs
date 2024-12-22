@@ -9,6 +9,6 @@ namespace Car_oop.Interface
 
         PersonalDto CreatePersonal(PersonalForCreationDto personal, int PostId,bool trackChanges);
         void DeletePersonal(int Id,bool trackChanges);
-        void UpdatePersonal(int Id,PersonalForUpdateDto personal,bool trackChanges);
+        void UpdatePersonal(int Id,PersonalForUpdateDto personal,int? PostId,bool trackChanges);
     }
 }
