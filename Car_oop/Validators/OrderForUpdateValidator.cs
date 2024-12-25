@@ -8,8 +8,8 @@ namespace Car_oop.Validators
         public OrderForUpdateValidator()
         {
             RuleFor(order => order.orderDate)
-                .GreaterThanOrEqualTo(DateTime.Now)
-                .WithMessage("Дата заказа не может быть в прошлом.")
+                .GreaterThanOrEqualTo(new DateTime(2024, 1, 1))
+                .WithMessage("Дата заказа не может быть раньше 2024 года.")
                 .When(order => order.orderDate.HasValue);
 
             RuleFor(order => order.price)

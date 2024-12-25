@@ -58,7 +58,7 @@ namespace Car_oop.Repository
         }
         public void UpdatePost(int id, PostForUpdateDto post, bool trackChanges)
         {
-            var postCheck = FindByCondition(pt => pt.Id.Equals(id), trackChanges);
+            var postCheck = FindByCondition(x => x.Id.Equals(id), trackChanges).SingleOrDefault();
             if (postCheck is null)
             { throw new NotFound(); }
             _mapper.Map(post, postCheck);

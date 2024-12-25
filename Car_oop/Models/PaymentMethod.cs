@@ -7,7 +7,7 @@ namespace Car_oop.Models
         [Key]
         public int Id { get; set; }
         public string paymentMethod { get; set; }
-        // связь 1 к 1 PaymentMethod --> Order
-        public Order order { get; set; }
+        // связь 1 к м PaymentMethod --> Order
+        public ICollection<Order> orders { get; set; }
     }
 }

@@ -50,6 +50,8 @@ namespace Car_oop.Repository
             {
                 throw new NotFound();
             }
+            Delete(modelCarCheck);
+            _context.SaveChanges();
 
         }
         public void UpdateModelCar(int id,ModelCarForUpdateDto modelCar, bool trackChanges)

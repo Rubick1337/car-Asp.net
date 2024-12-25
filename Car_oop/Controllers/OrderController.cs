@@ -49,7 +49,7 @@ namespace Car_oop.Controllers
                 return UnprocessableEntity(ModelState);
 
             }
-            var personCreate = _orderRepository.CreateOrder(model, ClientId, PersonalId, PaymentMethodId, CarId, false);
+            var personCreate = _orderRepository.CreateOrder(model, PersonalId , ClientId, CarId , PaymentMethodId, false);
             return Ok(personCreate);
         }
         [HttpDelete("{id:int}")]
